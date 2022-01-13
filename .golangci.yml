@@ -1,0 +1,108 @@
+# See https://golangci-lint.run/usage/configuration/ for more configuration values
+
+linters-settings:
+  # Force checking of errors
+  errcheck:
+    # Always check errors from type assertions
+    check-type-assertions: true
+
+  # Enforce following of error 1.13 error conventions
+  # See https://go.dev/blog/go1.13-errors
+  errorlint:
+    errorf: true
+    asserts: true
+    comparison: true
+
+  # Forbids certain identifiers
+  forbidigo:
+    forbid:
+      # Most print statements are for debugging purposes
+      # Logging should be done using a logger object
+      - 'fmt\.Print*'
+
+  # Analyzes cognitive complexity of code
+  gocognit:
+    # Mininum complexity to report
+    min-complexity: 10
+
+  # Report literals that should be constants
+  goconst:
+    min-length: 1
+    min-occurrences: 3
+
+  gocritic:
+    # See https://github.com/go-critic/go-critic for more info
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+      - experimental
+      - opinionated
+
+  govet:
+    check-shadowing: true
+
+  # Linting for disabling the linter
+  nolintlint:
+    require-explanation: true
+    require-specific: true
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - cyclop
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - errcheck
+    - errname
+    - errorlint
+    - exportloopref
+    - exhaustive
+    - exportloopref
+    - forbidigo
+    - funlen
+    - gci
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - godox
+    - gofmt
+    - goimports
+    - gomnd
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - ifshort
+    - ireturn
+    - lll
+    - makezero
+    - misspell
+    - nakedret
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - revive
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - testpackage
+    - thelper
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam
+    - varcheck
+    - wastedassign
+    - whitespace
+    - wrapcheck
+    - wsl
+
+run:
+  issues-exit-code: 1
