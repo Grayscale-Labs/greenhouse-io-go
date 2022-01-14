@@ -33,9 +33,7 @@ func (c *Client) generateHTTPRequest(method, url string) (*http.Request, error) 
 
 // generateAuthHeaderValue encodes the API token and formats it according to RFC 7617.
 func generateAuthHeaderValue(apiToken string) string {
-	encoded := base64.StdEncoding.EncodeToString([]byte(apiToken + ":"))
-
-	return "Basic " + encoded
+	return "Basic " + base64.StdEncoding.EncodeToString([]byte(apiToken+":"))
 }
 
 // parseNextPageLink parses the `link` header in the given response for the `next` link.
