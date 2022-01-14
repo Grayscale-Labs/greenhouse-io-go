@@ -72,7 +72,7 @@ func (r *CandidatesRequest) Stream(consumer chan *models.Candidate, closeSignal 
 }
 
 func (r *CandidatesRequest) CreatedBefore(timestamp time.Time) *CandidatesRequest {
-	r.addPrefixToken()
+	addPrefixToken(r.queryBuilder)
 
 	r.queryBuilder.WriteString(fmt.Sprintf(
 		"created_before=%s",
@@ -80,15 +80,6 @@ func (r *CandidatesRequest) CreatedBefore(timestamp time.Time) *CandidatesReques
 	))
 
 	return r
-}
-
-// addPrefixToken adds the correct preceding token given how many parameters exist.
-func (r *CandidatesRequest) addPrefixToken() {
-	if r.queryBuilder.Len() == 0 {
-		r.queryBuilder.WriteString("?")
-	} else {
-		r.queryBuilder.WriteString("&")
-	}
 }
 
 // fetchCandidates fetches candidates from the given URL.
