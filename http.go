@@ -2,7 +2,6 @@ package greenhouseio
 
 import (
 	"encoding/base64"
-	"errors"
 	"fmt"
 	"net/http"
 	"regexp"
@@ -40,12 +39,12 @@ func generateAuthHeaderValue(apiToken string) string {
 }
 
 // parseNextPageLink parses the `link` header in the given response for the `next` link.
-func parseNextPageLink(res *http.Response) (string, error) {
+func parseNextPageLink(res *http.Response) string {
 	matches := nextPageLinkRegex.FindStringSubmatch((res.Header.Get("link")))
 	if len(matches) == 0 {
-		return "", errors.New("no next link")
+		return ""
 	}
 
 	// First element is the match, second element is the group.
-	return matches[1], nil
+	return matches[1]
 }

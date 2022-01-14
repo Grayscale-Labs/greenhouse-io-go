@@ -60,8 +60,8 @@ func (r *CandidatesRequest) Stream(consumer chan *models.Candidate, closeSignal 
 			consumer <- candidate
 		}
 
-		nextURL, err := parseNextPageLink(res)
-		if err != nil {
+		nextURL := parseNextPageLink(res)
+		if nextURL == "" {
 			closeStream(nil)
 			break
 		}
