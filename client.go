@@ -3,12 +3,18 @@ package greenhouseio
 import (
 	"context"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"net/http"
+	"regexp"
 )
 
 const (
 	baseURL = "https://harvest.greenhouse.io/v1"
+)
+
+var (
+	nextPageLinkRegex = regexp.MustCompile(`<(.*)>; rel="next"`)
 )
 
 type Client struct {
@@ -43,4 +49,14 @@ func generateAuthHeaderValue(apiToken string) string {
 	encoded := base64.StdEncoding.EncodeToString([]byte(apiToken + ":"))
 
 	return "Basic " + encoded
+}
+
+// parseNextPageLink parses the `link` header in the given response for the `next` link.
+func parseNextPageLink(res *http.Response) (string, error) {
+	matches := nextPageLinkRegex.FindStringSubmatch((res.Header.Get("link")))
+	if len(matches) != 0 {
+		return "", errors.New("no next link")
+	}
+
+	return matches[1], nil
 }

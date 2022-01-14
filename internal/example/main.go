@@ -8,6 +8,7 @@ import (
 	"time"
 
 	greenhouseio "github.com/Grayscale-Labs/greenhouse-io-go"
+	"github.com/Grayscale-Labs/greenhouse-io-go/models"
 )
 
 const (
@@ -26,12 +27,19 @@ func main() {
 		log.Fatalf("creating greenhouse client: %v", err)
 	}
 
-	candidates, err := client.Candidates().Fetch()
-	if err != nil {
-		log.Fatalf("fetching candidates: %v", err)
-	}
+	candidates, closeSignal := make(chan models.Candidate), make(chan error)
+	go client.Candidates().Stream(candidates, closeSignal)
 
-	for _, c := range candidates {
-		log.Default().Println(c.ID)
+	for {
+		select {
+		case err := <-closeSignal:
+			if err != nil {
+				log.Fatalf("error streaming candidates: %v", err)
+			}
+
+			os.Exit(0)
+		case candidate := <-candidates:
+			log.Default().Println("streamed", candidate.ID)
+		}
 	}
 }
