@@ -9,7 +9,7 @@ A Go interface to [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_ins
 `NewClient` accepts:
 
 - A context; used for any HTTP requests made using the client.
-- Any struct following the `httpClient` interface; this allows for useage of other HTTP clients, like (go-retryablehttp)[https://github.com/hashicorp/go-retryablehttp].
+- Any struct implementing the [`httpClient`](https://github.com/Grayscale-Labs/greenhouse-io-go/blob/55cec5d058f98725c3c071945407652f10d347de/http.go#L5) interface; this allows for useage of other HTTP clients, like (go-retryablehttp)[https://github.com/hashicorp/go-retryablehttp].
 - The API token.
 
 ```
