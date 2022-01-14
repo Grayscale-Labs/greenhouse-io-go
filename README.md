@@ -10,7 +10,7 @@ Documentation for the Harvest and Job Board web APIs can be found at [developers
 
 ### Prerequisites
 
-Via brew
+Installing Go and [golangci-lint](https://golangci-lint.run/) via Brew
 
 ```bash
 brew install go golangci-lint
