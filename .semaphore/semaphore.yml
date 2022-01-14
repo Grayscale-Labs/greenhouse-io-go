@@ -1,0 +1,26 @@
+version: v1.0
+name: CI/CD
+
+agent:
+  machine:
+    type: e1-standard-2
+
+blocks:
+  - name: Linting
+    task:
+      prologue:
+        commands:
+          - checkout
+      jobs:
+        - name: golangci-lint
+          commands:
+            - make lint
+  - name: Unit Tests
+    task:
+      prologue:
+        commands:
+          - checkout
+      jobs:
+        - name: go test
+          commands:
+            - make test
