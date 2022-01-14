@@ -55,6 +55,7 @@ func (r *CandidatesRequest) Stream(consumer chan models.Candidate, closeSignal c
 		}
 
 		for _, candidate := range candidates {
+			// Due to the nature of channels, this operation blocks until the consumer is ready to accept another candidate.
 			consumer <- *candidate
 		}
 
