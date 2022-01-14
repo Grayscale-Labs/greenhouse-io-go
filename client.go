@@ -54,7 +54,7 @@ func generateAuthHeaderValue(apiToken string) string {
 // parseNextPageLink parses the `link` header in the given response for the `next` link.
 func parseNextPageLink(res *http.Response) (string, error) {
 	matches := nextPageLinkRegex.FindStringSubmatch((res.Header.Get("link")))
-	if len(matches) != 0 {
+	if len(matches) == 0 {
 		return "", errors.New("no next link")
 	}
 
