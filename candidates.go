@@ -36,7 +36,8 @@ func (r *CandidatesRequest) Fetch() ([]*models.Candidate, error) {
 	return candidates, err
 }
 
-func (r *CandidatesRequest) Stream(consumer chan models.Candidate, closeSignal chan error) {
+// Stream fetches a page of candidates, outputs the them into the given consumer channel, and attempts to fetch the next page.
+func (r *CandidatesRequest) Stream(consumer chan *models.Candidate, closeSignal chan error) {
 	// This gets set to the "next" page URL (if it exists).
 	currentURL := candidatesURL + r.queryBuilder.String()
 
@@ -56,7 +57,7 @@ func (r *CandidatesRequest) Stream(consumer chan models.Candidate, closeSignal c
 
 		for _, candidate := range candidates {
 			// Due to the nature of channels, this operation blocks until the consumer is ready to accept another candidate.
-			consumer <- *candidate
+			consumer <- candidate
 		}
 
 		nextURL, err := parseNextPageLink(res)

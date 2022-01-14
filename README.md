@@ -43,7 +43,7 @@ Streaming puts each resource loaded into a given consumer channel while followin
 All candidates
 
 ```
-candidates, closeSignal := make(chan models.Candidate), make(chan error)
+candidates, closeSignal := make(chan *models.Candidate), make(chan error)
 go client.Candidates().Stream(candidates, closeSignal)
 
 for {

@@ -27,7 +27,7 @@ func main() {
 		log.Fatalf("creating greenhouse client: %v", err)
 	}
 
-	candidates, closeSignal := make(chan models.Candidate), make(chan error)
+	candidates, closeSignal := make(chan *models.Candidate), make(chan error)
 	go client.Candidates().Stream(candidates, closeSignal)
 
 	for {
