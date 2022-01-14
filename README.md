@@ -24,3 +24,9 @@ Linting
 ```bash
 make lint
 ```
+
+Run tests
+
+```bash
+make test
+```
