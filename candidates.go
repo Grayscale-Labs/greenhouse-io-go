@@ -84,7 +84,7 @@ func (r *CandidatesRequest) CreatedBefore(timestamp time.Time) *CandidatesReques
 
 // fetchCandidates fetches candidates from the given URL.
 func (c *Client) fetchCandidates(url string) ([]*models.Candidate, *http.Response, error) {
-	// Create request with built params string.
+	// Create request with given URL.
 	req, err := c.generateHTTPRequest("GET", url)
 	if err != nil {
 		return nil, nil, fmt.Errorf("generating request: %w", err)
