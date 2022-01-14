@@ -37,16 +37,20 @@ func (r *CandidatesRequest) Fetch() ([]*models.Candidate, error) {
 }
 
 func (r *CandidatesRequest) Stream(consumer chan models.Candidate, closeSignal chan error) {
+	// This gets set to the "next" page URL (if it exists).
 	currentURL := candidatesURL + r.queryBuilder.String()
+
+	closeStream := func(err error) {
+		closeSignal <- err
+
+		close(consumer)
+		close(closeSignal)
+	}
 
 	for currentURL != "" {
 		candidates, res, err := r.client.fetchCandidates(currentURL)
 		if err != nil {
-			closeSignal <- err
-
-			close(consumer)
-			close(closeSignal)
-
+			closeStream(err)
 			break
 		}
 
@@ -56,11 +60,7 @@ func (r *CandidatesRequest) Stream(consumer chan models.Candidate, closeSignal c
 
 		nextURL, err := parseNextPageLink(res)
 		if err != nil {
-			closeSignal <- nil
-
-			close(consumer)
-			close(closeSignal)
-
+			closeStream(nil)
 			break
 		}
 
