@@ -1,0 +1,1 @@
+docker run --rm -it --entrypoint /bin/sh -v $(pwd):/app/ golangci/golangci-lint -c '$1'

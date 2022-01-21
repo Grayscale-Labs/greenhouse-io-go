@@ -1,7 +1,7 @@
 .PHONY: lint test
 
 lint:
-	golangci-lint run
+	bin/docker "golangci-lint run"
 
 test:
-	go test ./...
+	bin/docker 'go test ./...'
