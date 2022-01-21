@@ -5,22 +5,25 @@ agent:
   machine:
     type: e1-standard-2
 
+  containers:
+    - name: wrangler
+      image: "743129847993.dkr.ecr.us-east-1.amazonaws.com/wrangler:latest"
+      env_vars:
+        - name: WRANGLER_ENV
+          value: "test"
+
 blocks:
   - name: Linting
     task:
-      prologue:
-        commands:
-          - checkout
       jobs:
         - name: golangci-lint
           commands:
+            - checkout
             - make lint
   - name: Unit Tests
     task:
-      prologue:
-        commands:
-          - checkout
       jobs:
         - name: go test
           commands:
+            - checkout
             - make test
