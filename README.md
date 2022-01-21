@@ -68,12 +68,9 @@ Documentation for the Harvest and Job Board web APIs can be found at [developers
 
 ### Prerequisites
 
-Installing Go and [golangci-lint](https://golangci-lint.run/) via Brew
+Install [Docker](https://www.docker.com/).
 
-```bash
-brew install go golangci-lint
-echo "export PATH=~/go/bin/:$PATH" >> ~/.zshrc
-```
+Linting and tests are run within a [`golangci-lint`](https://hub.docker.com/r/golangci/golangci-lint) container.
 
 ### Commands
 
