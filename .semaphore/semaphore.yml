@@ -12,6 +12,9 @@ agent:
         - name: WRANGLER_ENV
           value: "test"
 
+  image_pull_secrets:
+    - name: aws-ecr-pull-secrets
+
 blocks:
   - name: Linting
     task:
